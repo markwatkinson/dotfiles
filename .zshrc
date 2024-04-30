@@ -6,6 +6,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 export PATH="$HOME/bin:$PATH"
+export FPATH=$HOME/.zfunc/:$FPATH
 
 # The following lines were added by compinstall
 
@@ -31,42 +32,6 @@ alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias top='btop'
 alias dotfiles="git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
-
-powerinfo() {
-  pnow=$(cat /sys/class/power_supply/BAT*/power_now)
-  enow=$(cat /sys/class/power_supply/BAT*/energy_now)
-  cnow=$(cat /sys/class/power_supply/BAT*/capacity)
-
-  pstatus=$(cat /sys/class/power_supply/BAT*/status)
-  draw=$(printf '%.3g\n' $(($pnow / 1000000.0)))
-  remaining=$(($enow / "$pnow.0"))
-  remaining_h=$(($remaining|0))
-  remaining_m_f=$((($remaining - $remaining_h)*60))
-  remaining_m=$(($remaining_m_f|0))
-  remaining_m_padded=${(l:2::0:)remaining_m}
-  expected_date=$(date -d "+$remaining_h hours $remaining_m minutes" "+%H:%M")
-
-  col="\033[1;31m"
-  col_reset="\033[0m"
-  draws_ymbol="-"
-  draw_label="Draw rate"
-  remaining_label="Remaining"
-  expected_label="Empty at"
-
-  if [[ "$pstatus" == "Charging" ]]; then
-    col="\033[0;32m"
-    draw_symbol="+"
-    draw_label="Charge rate"
-    remaining_label="Time to full charge"
-    expected_label="Fully charged at"
-  fi
-
-  echo "Status: $col$pstatus$col_reset"
-  echo "Level: $cnow%"
-  echo "$draw_label: $draw_symbol$draw W"
-  echo "$remaining_label: $remaining_h:$remaining_m_padded"
-  echo "$expected_label $expected_date"
-}
 
 
 
@@ -106,3 +71,4 @@ source ~/.powerlevel10k/powerlevel10k.zsh-theme
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 
+autoload powerinfo
