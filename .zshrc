@@ -8,6 +8,8 @@ fi
 export PATH="$HOME/bin:$PATH"
 export FPATH=$HOME/.zfunc/:$FPATH
 
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+
 # The following lines were added by compinstall
 
 zstyle ':completion:*' completer _complete _ignored
