@@ -1,0 +1,5 @@
+[Unit]
+Description="Set power profile based on running processes"
+
+[Service]
+ExecStart=/home/mark/bin/set-power-profile.sh

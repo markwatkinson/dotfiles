@@ -1,0 +1,10 @@
+[Unit]
+Description="Set power profile based on running processes"
+
+[Timer]
+OnCalendar=*:0/1
+Persistent=true
+Unit="power-profile.service"
+
+[Install]
+WantedBy=timers.target
