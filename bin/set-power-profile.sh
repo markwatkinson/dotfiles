@@ -4,7 +4,7 @@
 # Sets the power profile based on running processes.
 ################
 
-declare -a processes=("FalloutNV.exe")
+declare -a processes=("FalloutNV.exe" "Fallout4.exe")
 
 profile="power-saver"
 process=""
@@ -19,6 +19,15 @@ do
         break
     fi
 done
+
+if [[ "$profile" == "power-saver" ]] then
+    pgrep -f '/opt/google/chrome' -u gfn
+    if [[ $? == 0 ]] then
+        process="chrome on gfn"
+        profile="balanced"
+        break
+    fi
+fi
 
 current=$(powerprofilesctl get)
 
