@@ -4,7 +4,7 @@
 # Sets the power profile based on running processes.
 ################
 
-declare -a processes=("FalloutNV.exe" "Fallout4.exe")
+declare -a processes=("FalloutNV.exe" "Fallout4.exe" "gamescope")
 
 profile="power-saver"
 process=""
