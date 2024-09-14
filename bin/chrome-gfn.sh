@@ -1,5 +1,9 @@
-google-chrome \
+google-chrome-unstable \
 	--use-gl=angle \
 	--use-angle=vulkan \
 	--enable-accelerated-video-decode \
-	--enable-features=Vulkan,VulkanFromANGLE,DefaultANGLEVulkan,VaapiIgnoreDriverChecks,VaapiVideoDecoder,PlatformHEVCDecoderSupport,UseMultiPlaneFormatForHardwareVideo \
+	--enable-features=Vulkan,VulkanFromANGLE,DefaultANGLEVulkan,VaapiIgnoreDriverChecks,VaapiVideoDecoder,UseMultiPlaneFormatForHardwareVideo,VaapiVideoEncoder \
+	--ozone-platform-hint=auto \
+	--ozone-platform=wayland \
+	--ignore-gpu-blocklist \
+	--enable-zero-copy \
