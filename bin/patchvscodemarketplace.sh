@@ -35,14 +35,6 @@ if [ -f "$rpmnewpath" ] ; then
 fi
 
 if [ "${1}" = "-R" ]; then
-  sed -i -e 's/^[[:blank:]]*"serviceUrl":.*/    "serviceUrl": "https:\/\/open-vsx.org\/vscode\/gallery",/' \
-    -e '/^[[:blank:]]*"cacheUrl/d' \
-    -e 's/^[[:blank:]]*"itemUrl":.*/    "itemUrl": "https:\/\/open-vsx.org\/vscode\/item"/' \
-    -e '/^[[:blank:]]*"linkProtectionTrustedDomains/d' \
-    -e '/^[[:blank:]]*"documentationUrl/i\  "linkProtectionTrustedDomains": ["https://open-vsx.org"],' \
-    $productpath
-    echo "Patched"
-else
   sed -i -e 's/^[[:blank:]]*"serviceUrl":.*/    "serviceUrl": "https:\/\/marketplace.visualstudio.com\/_apis\/public\/gallery",/' \
     -e '/^[[:blank:]]*"cacheUrl/d' \
     -e '/^[[:blank:]]*"serviceUrl/a\    "cacheUrl": "https:\/\/vscode.blob.core.windows.net\/gallery\/index",' \
@@ -50,4 +42,12 @@ else
     -e '/^[[:blank:]]*"linkProtectionTrustedDomains/d' \
     $productpath
     echo "Reverted"
+else
+  sed -i -e 's/^[[:blank:]]*"serviceUrl":.*/    "serviceUrl": "https:\/\/open-vsx.org\/vscode\/gallery",/' \
+    -e '/^[[:blank:]]*"cacheUrl/d' \
+    -e 's/^[[:blank:]]*"itemUrl":.*/    "itemUrl": "https:\/\/open-vsx.org\/vscode\/item"/' \
+    -e '/^[[:blank:]]*"linkProtectionTrustedDomains/d' \
+    -e '/^[[:blank:]]*"documentationUrl/i\  "linkProtectionTrustedDomains": ["https://open-vsx.org"],' \
+    $productpath
+    echo "Patched"
 fi
