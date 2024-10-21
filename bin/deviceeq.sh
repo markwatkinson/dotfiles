@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-declare -A presets=( ["default"]="Blank" ["boseqc"]="BoseQC")
-
 tmppath=/tmp/deviceeq
 
 set_device() {
@@ -9,12 +7,7 @@ set_device() {
 }
 
 set_eq() {
-    local device=`cat "$tmppath"`
-    local preset="${presets[default]}"
-    if [[ -v presets[$device] ]]; then
-        preset="${presets[$device]}"
-    fi
-
+    local preset=`cat "$tmppath"`
     echo "Loading preset $preset"
     easyeffects -l "$preset"
     local code=$?
