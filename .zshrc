@@ -6,6 +6,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 export FPATH=$HOME/.zfunc/:$FPATH
 
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
@@ -24,6 +25,7 @@ promptinit
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=10000
+setopt HIST_IGNORE_SPACE
 unsetopt beep
 bindkey -e
 # End of lines configured by zsh-newuser-install
@@ -32,8 +34,12 @@ bindkey -e
 
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
-alias top='btop'
 alias dotfiles="git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
+
+if  command -v btop &> /dev/null
+then
+    alias top='btop'
+fi
 
 
 
@@ -64,6 +70,14 @@ bindkey '^[[1;5D' backward-word                                 #
 bindkey '^[[1;5C' forward-word                                  #
 bindkey '^H' backward-kill-word                                 # delete previous word with ctrl+backspace
 bindkey '^[[Z' undo                                             # Shift+tab undo last action
+
+
+# npm
+NPM_PACKAGES="${HOME}/.npm-packages"
+export PATH="$PATH:$NPM_PACKAGES/bin"
+# Preserve MANPATH if you already defined it somewhere in your config.
+# Otherwise, fall back to `manpath` so we can inherit from `/etc/manpath`.
+export MANPATH="${MANPATH-$(manpath)}:$NPM_PACKAGES/share/man"
 
 
 
