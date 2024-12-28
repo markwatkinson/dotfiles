@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Runs a given command using the integrated GPU
+
+me=$(basename "$0")
+if [ "$#" -eq 0 ]; then
+    echo "Usage: $me COMMAND"
+    echo
+    echo "e.g. $me glxinfo | grep vendor"
+fi
+
+# Use
+# MESA_VK_DEVICE_SELECT=list vulkaninfo
+# to get a list of devices, and their name and ID
+
+__NV_PRIME_RENDER_OFFLOAD=0 DRI_PRIME=1002:15bf MESA_VK_DEVICE_SELECT=1002:15bf DXVK_FILTER_DEVICE_NAME="AMD Radeon 780M (RADV GFX1103_R1)" DXVK_HUD=1 "$@"
+

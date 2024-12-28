@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Runs a given command using the dedicated GPU
+
+
+me=$(basename "$0")
+if [ "$#" -eq 0 ]; then
+    echo "Usage: $me COMMAND"
+    echo
+    echo "e.g. $me glxinfo | grep vendor"
+fi
+
+__NV_PRIME_RENDER_OFFLOAD=1 __VK_LAYER_NV_optimus=NVIDIA_only __GLX_VENDOR_LIBRARY_NAME=nvidia "$@"
