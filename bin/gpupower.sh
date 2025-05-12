@@ -12,15 +12,22 @@ watts=$(awk '{printf("%.2fW", $1*10^-6)}' "$bat/power_now")
 cstatus=$(cat "$bat/status")
 symbol="-"
 
-if [[ "$cstatus" == "Charging" ]]; then
-    symbol="+"
-fi
-
-
 pnow=$(cat "$bat/power_now")
 enow=$(cat "$bat/energy_now")
-
 remaining=$(($enow / "$pnow.0"))
+
+
+if [[ "$cstatus" == "Charging" ]]; then
+    efull=$(cat "$bat/energy_full")
+    symbol="+"
+    remaining=$(( ($efull - $enow) / "$pnow.0"  ))
+fi
+
+if [[ $pnow = 0 ]]; then
+    remaining=0
+fi;
+
+
 remaining_h=$(($remaining|0))
 remaining_m_f=$((($remaining - $remaining_h)*60))
 remaining_m=$(($remaining_m_f|0))
@@ -28,11 +35,14 @@ remaining_m_padded=${(l:2::0:)remaining_m}
 
 gpu_status=$(cat /sys/class/drm/card0/device/power_state)
 
-rrate=$(xrandr | grep '*+' | sed -r -e 's/(^\s+\S+\s+)|([^0-9\.])//g')
+rrate=$(xrandr | grep '*+' | sed -r -e 's/(^\s+\S+\s+)|([^0-9\.])//g' | head -1)
 rrate_hz=$(printf "%.0fHz" "$rrate")
 
 c1_1="${symbol}${watts}"
 c1_2="$remaining_h:$remaining_m_padded"
+if [[ "$cstatus" == "Charging" ]]; then
+    # c1_2="Charging"
+fi
 c2_1="$gpu_status"
 c2_2="$rrate_hz"
 
