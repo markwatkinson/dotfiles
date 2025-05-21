@@ -38,6 +38,7 @@ alias dotfiles="git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
 
 if  command -v btop &> /dev/null
 then
+    alias realtop='/usr/bin/top'
     alias top='btop'
 fi
 
